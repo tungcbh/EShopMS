@@ -8,11 +8,13 @@
         decimal Price)
         : ICommand<CreateProductResult>;
     public record CreateProductResult(Guid Id);
-    internal class CreateProductCommandHandler(IDocumentSession sesssion)
+    internal class CreateProductCommandHandler(IDocumentSession session, ILogger<CreateProductCommandHandler> logger)
         : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
+            logger.LogInformation("CreateProductCommandHandler.Handle callled");
+
             //create product entity form command 
             var product = new Product
             {
@@ -23,8 +25,8 @@
                 Price = command.Price,
             };
             //save to DB?
-            sesssion.Store(product);
-            await sesssion.SaveChangesAsync(cancellationToken);
+            session.Store(product);
+            await session.SaveChangesAsync(cancellationToken);
             //return result
             return new CreateProductResult(product.Id);
         }
