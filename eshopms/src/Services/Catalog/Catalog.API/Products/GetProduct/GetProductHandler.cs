@@ -5,7 +5,7 @@ namespace Catalog.API.Products.GetProduct
     public record GetProductResult(IEnumerable<Product> Products);
     internal class GetProductQueryHandler 
         (IDocumentSession session, ILogger<GetProductQueryHandler> logger)
-        : IQuertHandler<GetProductQuery, GetProductResult>
+        : IQueryHandler<GetProductQuery, GetProductResult>
     {
         public async Task<GetProductResult> Handle(GetProductQuery query, CancellationToken cancellationToken)
         {
