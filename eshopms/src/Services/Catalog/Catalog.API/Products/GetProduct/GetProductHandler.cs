@@ -1,7 +1,4 @@
-﻿
-using Marten.Pagination;
-
-namespace Catalog.API.Products.GetProduct
+﻿namespace Catalog.API.Products.GetProduct
 {
     public record GetProductQuery(int? PageNumber = 1, int? PageSize = 10) : IQuery<GetProductResult>;
     public record GetProductResult(IEnumerable<Product> Products);
