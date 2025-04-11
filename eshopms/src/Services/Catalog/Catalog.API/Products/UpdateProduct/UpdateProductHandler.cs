@@ -1,4 +1,5 @@
 ﻿using Catalog.API.Products.CreateProduct;
+using System.Xml.Linq;
 
 namespace Catalog.API.Products.UpdateProduct
 {
@@ -11,6 +12,18 @@ namespace Catalog.API.Products.UpdateProduct
         decimal Price)
         : ICommand<UpdateProductResult>;
     public record UpdateProductResult(Guid Id);
+    public class UpdateProductCommandValidator : AbstractValidator<UpdateProductCommand>
+    {
+        public UpdateProductCommandValidator()
+        {
+            RuleFor(x => x.Name)
+                .NotEmpty().WithMessage("Name is required")
+                .Length(2, 150).WithMessage("Name must be between 2 and 150 character");
+            RuleFor(x => x.Category).NotEmpty().WithMessage("Category is required");
+            RuleFor(x => x.ImageFile).NotEmpty().WithMessage("ImageFile is required");
+            RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price must > 0");
+        }
+    }
     internal class UpdateProductCommandHandler
         (IDocumentSession session, ILogger<UpdateProductCommandHandler> logger)
         : ICommandHandler<UpdateProductCommand, UpdateProductResult>
@@ -22,7 +35,7 @@ namespace Catalog.API.Products.UpdateProduct
 
             if (product == null)
             {
-                throw new ProductNotFoundException();
+                throw new ProductNotFoundException(command.Id);
             }
 
             product.Name = command.Name;
