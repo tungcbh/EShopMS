@@ -25,6 +25,6 @@ builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 var app = builder.Build();
 
 app.MapCarter();
-app.UseExceptionHandler();
+app.UseExceptionHandler(options => { });
 
 app.Run();

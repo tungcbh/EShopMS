@@ -10,7 +10,7 @@
             //get basket from db
             var basket = await repository.GetBasket(query.UserName);
 
-            return new GetBasketResult(new ShoppingCart());
+            return new GetBasketResult(basket);
         }
     }
 }
