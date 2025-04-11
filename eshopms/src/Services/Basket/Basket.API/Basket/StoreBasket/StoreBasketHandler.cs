@@ -1,9 +1,7 @@
-﻿using FluentValidation;
-
-namespace Basket.API.Basket.StoreBasket
+﻿namespace Basket.API.Basket.StoreBasket
 {
     public record StoreBasketCommand(ShoppingCart Cart) : ICommand<StoreBasketResult>;
-    public record StoreBasketResult(bool IsSuccess);
+    public record StoreBasketResult(string UserName);
     public class StoreBasketValidator : AbstractValidator<StoreBasketCommand>
     {
         public StoreBasketValidator()
@@ -13,7 +11,7 @@ namespace Basket.API.Basket.StoreBasket
             RuleFor(x => x.Cart.UserName)
                 .NotEmpty().WithMessage("Username is required");
         }
-        public class StoreBasketCommandHandler
+        public class StoreBasketCommandHandler(IBasketRepository repository)
             : ICommandHandler<StoreBasketCommand, StoreBasketResult>
         {
             public async Task<StoreBasketResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
@@ -21,10 +19,10 @@ namespace Basket.API.Basket.StoreBasket
                 ShoppingCart cart = command.Cart;
 
                 //store cart in db - use Marten upsert
-
+                await repository.StoreBasket(cart, cancellationToken); 
                 //update cache
 
-                return new StoreBasketResult(true);
+                return new StoreBasketResult(cart.UserName);
             }
         }
     }
