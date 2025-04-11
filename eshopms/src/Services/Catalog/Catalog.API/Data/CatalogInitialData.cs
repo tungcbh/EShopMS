@@ -8,7 +8,7 @@ namespace Catalog.API.Data
         {
             using var session = store.LightweightSession();
 
-            if (await session.Query<CatalogInitialData>().AnyAsync())
+            if (await session.Query<Product>().AnyAsync())
                 return;
 
             //Marten upsert will cater for existing records
