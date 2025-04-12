@@ -24,7 +24,7 @@ services:
     image: ${DOCKER_REGISTRY-}discountgrpc
     build:
       context: .
-      dockerfile: src/Services/Discount/GrpcService1/Dockerfile
+      dockerfile: src/Services/Discount/Discount.Grpc/Dockerfile
 
 volumes:
   postgres_catalog:
