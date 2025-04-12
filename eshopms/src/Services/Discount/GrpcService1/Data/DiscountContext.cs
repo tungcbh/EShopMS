@@ -1,5 +1,7 @@
 ﻿using Discount.Grpc.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Reflection.Emit;
 
 namespace Discount.Grpc.Data
 {
@@ -7,9 +9,8 @@ namespace Discount.Grpc.Data
     {
         public DbSet<Coupon> Coupons { get; set; } = default!;
         public DiscountContext(DbContextOptions options)
-            : base(options)
+        : base(options)
         {
-            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

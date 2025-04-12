@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Discount.Grpc.Services
 {
-    public class DiscountService(DiscountContext dbContext, ILogger<DiscountService> logger) 
+    public class DiscountService(DiscountContext dbContext, ILogger<DiscountService> logger)
         : DiscountProtoService.DiscountProtoServiceBase
     {
         public override async Task<CouponModel> GetDiscount(GetDiscountRequest request, ServerCallContext context)
@@ -15,7 +15,8 @@ namespace Discount.Grpc.Services
             var coupon = await dbContext.Coupons
                 .FirstOrDefaultAsync(x => x.ProductName == request.ProductName);
 
-            if (coupon == null) {
+            if (coupon == null)
+            {
                 coupon = new Coupon
                 {
                     ProductName = "No discount",
@@ -72,7 +73,7 @@ namespace Discount.Grpc.Services
             if (coupon is null)
                 throw new RpcException(new Status(StatusCode.NotFound, $"Discount with ProductName={request.ProductName} is not found."));
 
-            dbContext.Coupons .Remove(coupon);
+            dbContext.Coupons.Remove(coupon);
             await dbContext.SaveChangesAsync();
 
             logger.LogInformation("Discount is successfully deleted. ProductName : {ProductName}", request.ProductName);
