@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Ordering.Infrastructure
@@ -10,8 +11,8 @@ namespace Ordering.Infrastructure
             var connectionString = configuration.GetConnectionString("Database");
 
             // Add services to the container
-            //services.AddDbContext<ApplicationDbContext>(option =>
-            //    option.UseSqlServer(connectionString));
+            services.AddDbContext<ApplicationDbContext>(option =>
+                option.UseSqlServer(connectionString));
 
             //services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 
