@@ -12,11 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\" />
     <Folder Include="Extensions\" />
     <Folder Include="Data\" />
     <Folder Include="Exceptions\" />
-    <Folder Include="Orders\Commands\" />
     <Folder Include="Orders\EventHandlers\" />
     <Folder Include="Orders\Queries\" />
   </ItemGroup>
