@@ -8,7 +8,7 @@ namespace Ordering.Application.Dtos
         Guid CustomerId,
         string OrderName,
         AddressDto ShippingAddress,
-        AddressDto BillingAddressd,
+        AddressDto BillingAddress,
         PaymentDto Payment,
         OrderStatus Status,
         List<OrderItemDto> OrderItems
